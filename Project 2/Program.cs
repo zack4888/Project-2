@@ -137,7 +137,7 @@ namespace Project_2
                     MaxDiff = i;
                 }
             }
-            Writer.WriteLine("The game with the greatest point difference was Super Bowl #: {0} ", MaxDiff.SBNumber);
+            Writer.WriteLine("The game with the greatest point difference was Super Bowl #: {0} \n with the {1} beating the {2} {3} to {4}", MaxDiff.SBNumber,MaxDiff.WinningTeam,MaxDiff.LosingTeam,MaxDiff.WinningPoints,MaxDiff.LosingPoints);
 
         }
         public static void AverageAttendance(List<SuperBowlWinner> SuperBowlWinners, StreamWriter Writer)
