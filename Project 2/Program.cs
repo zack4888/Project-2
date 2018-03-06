@@ -22,7 +22,7 @@ namespace Project_2
             //Declarations
             List<SuperBowlWinner> SuperBowlWinners = new List<SuperBowlWinner>();
             SuperBowlWinner ASuperbowlwinner;
-            const string FilePath = @"Super_Bowl_Project.csv";
+            string FilePath = Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString()).ToString() + @"\Super_Bowl_Project.csv";
             string[] Values;
             try
             {
