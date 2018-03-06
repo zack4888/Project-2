@@ -11,6 +11,7 @@ namespace Project_2
     {
         static void Main(string[] args)
         {
+            // declarations
             List<SuperBowlWinner> SuperBowlWinners;
             SuperBowlWinners = ReadFile();
             WriteFile(SuperBowlWinners);
@@ -24,6 +25,7 @@ namespace Project_2
             SuperBowlWinner ASuperbowlwinner;
             string FilePath = Directory.GetParent(Directory.GetParent(Environment.CurrentDirectory).ToString()).ToString() + @"\Super_Bowl_Project.csv";
             string[] Values;
+            // attempting to open the file and put data into the class list
             try
             {
                 FileStream file = new FileStream(FilePath, FileMode.Open, FileAccess.Read);
@@ -42,14 +44,19 @@ namespace Project_2
                 file.Close();
                 Reader.Close();
             }
+            // Will print out the exception
             catch(Exception i)
             {
                 Console.WriteLine(i);
+                Console.WriteLine("Press any key to continue");
+                Console.ReadKey();
             }
+            // Returns the list
             return SuperBowlWinners;
         }
         public static string EnterPath()
         {
+            // This module gets the file path and file name the user enters. 
             string FilePath = @"";
             Console.WriteLine("Welcome to the super bowl data organizer");
             Console.WriteLine("Please enter a valid file path and name for your txt file you do not need to include .txt");
@@ -58,7 +65,7 @@ namespace Project_2
         }
         public static void WriteFile(List<SuperBowlWinner> SuperBowlWinners)
         {
-           
+           // this module Writes everything to the file 
             string FileName = EnterPath() + ".txt";
             try
             {
@@ -78,12 +85,14 @@ namespace Project_2
                 Writer.Close();
                 file2.Close();
             }
+            // if directory was not found end the program
             catch(DirectoryNotFoundException)
             {
                 Console.WriteLine("The Directory you selected does not exsist");
                 Console.WriteLine("Press any key to end the program");
                 Console.ReadKey();
             }
+            //catch any other exception
             catch
             {
                 Console.WriteLine("an unexpected error has occured press any key to end the program");
@@ -93,6 +102,7 @@ namespace Project_2
         }
         public static void MostWinningTeam(List<SuperBowlWinner> SuperBowlWinners, StreamWriter Writer)
         {
+            // using linq to get the team with the most wins. 
             var MostWins = (
               from i in SuperBowlWinners
               group i by i.WinningTeam into Winners
@@ -109,6 +119,7 @@ namespace Project_2
         }
         public static void MostLosingTeam(List<SuperBowlWinner> SuperBowlWinners, StreamWriter Writer)
         {
+            // using linq to get the team who lost the most super bowls
             var MostLosses = (
                from i in SuperBowlWinners
                group i by i.LosingTeam into Losers
@@ -125,6 +136,7 @@ namespace Project_2
         }
         public static void GreatestPointDiff(List<SuperBowlWinner> SuperBowlWinners, StreamWriter Writer)
         {
+            //getting the game with the highest point difference between the two teams. 
             int MaxPointDiff = 0;
             SuperBowlWinner MaxDiff = SuperBowlWinners[1];
            
@@ -137,11 +149,12 @@ namespace Project_2
                     MaxDiff = i;
                 }
             }
-            Writer.WriteLine("The game with the greatest point difference was Super Bowl #: {0} ", MaxDiff.SBNumber);
+            Writer.WriteLine("The game with the greatest point difference was Super Bowl #: {0} \n with the {1} beating the {2} {3} to {4}", MaxDiff.SBNumber,MaxDiff.WinningTeam,MaxDiff.LosingTeam,MaxDiff.WinningPoints,MaxDiff.LosingPoints);
 
         }
         public static void AverageAttendance(List<SuperBowlWinner> SuperBowlWinners, StreamWriter Writer)
         {
+            // getting the average attendance of the super bowls
             double AverageAttendance=0;
             int Counting = 0;
             foreach(var i in SuperBowlWinners)
@@ -155,6 +168,7 @@ namespace Project_2
         }
         public static void MostWinningCoach(List<SuperBowlWinner> SuperBowlWinners, StreamWriter Writer)
         {
+            // using linq to get the Coach who won the most games. 
             var MostWins = (
                from i in SuperBowlWinners
                group i by i.CoachWinner into Winners
@@ -171,6 +185,7 @@ namespace Project_2
         }
         public static void MostLosingCoach(List<SuperBowlWinner> SuperBowlWinners,StreamWriter Writer)
         {
+            // using linq to get the coach who lost the most games. 
             var MostLosses =(
                 from i in SuperBowlWinners
                 group i by i.CoachLoser into Losers
@@ -188,6 +203,7 @@ namespace Project_2
         }
         public static void WinningTeams(List<SuperBowlWinner> SuperBowlWinners,StreamWriter Writer)
         {
+            // printing out the whole list of all the games 
             Writer.WriteLine();
             Writer.WriteLine("             Winning Teams            \n");
             foreach (SuperBowlWinner i in SuperBowlWinners)
@@ -199,10 +215,11 @@ namespace Project_2
         }
         public static void Top5Attended(List<SuperBowlWinner> SuperBowlWinners,StreamWriter Writer)
         {
+            // Declarations
             string[] DateSplit;
             int Year;
             List<SuperBowlWinner> Top5Attended = new List<SuperBowlWinner>();
-
+            // using linq to get the top 5 attended games 
             var Top5 =(
                 from i in SuperBowlWinners
                 where i.Attendees != 0
@@ -227,6 +244,7 @@ namespace Project_2
         }
         public static void MostHosted(List<SuperBowlWinner> SuperBowlWinners,StreamWriter Writer)
         {
+            //using linq to get the most hosted super bowls
             var MostHosted =
                 from i in SuperBowlWinners
                 group i by i.State into igroup
@@ -237,9 +255,7 @@ namespace Project_2
 
             Writer.WriteLine();
             Writer.WriteLine("           States that host the super bowl the most:");
-
-            
-           
+  
             foreach(var e in MostHosted)
             {
                 Writer.WriteLine(e.Key);
